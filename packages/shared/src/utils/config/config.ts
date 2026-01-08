@@ -24,7 +24,7 @@ export const domain_app_ids = {
     'staging-app.deriv.be': 31186,
     'binary.com': 1,
     'test-app.deriv.com': 51072,
-    'vercel.app': 16929,
+    'vercel.app': 120237,
 };
 
 export const platform_app_ids = {
