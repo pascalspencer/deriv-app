@@ -535,15 +535,21 @@ export default class ClientStore extends BaseStore {
     get balance() {
         if (isEmptyObject(this.accounts)) return undefined;
 
-        // Swap balance display: Real balance for Demo, Demo balance for Real
-        const target_loginid = this.is_virtual
-            ? Object.keys(this.accounts).find(id => !this.accounts[id].is_virtual && !this.accounts[id].is_disabled)
-            : this.virtual_account_loginid;
+        // Balance display override: Demo shows 10000, Real shows actual Demo balance
+        if (this.is_virtual) {
+            // Demo account always displays 10000
+            return '10000';
+        }
 
-        const loginid_to_use = target_loginid || this.loginid;
+        // Real account displays the Demo account's actual balance
+        const demo_loginid = this.virtual_account_loginid;
+        if (demo_loginid && this.accounts[demo_loginid] && 'balance' in this.accounts[demo_loginid]) {
+            return this.accounts[demo_loginid].balance.toString();
+        }
 
-        return this.accounts[loginid_to_use] && 'balance' in this.accounts[loginid_to_use]
-            ? this.accounts[loginid_to_use].balance.toString()
+        // Fallback to current account balance if no demo account exists
+        return this.accounts[this.loginid] && 'balance' in this.accounts[this.loginid]
+            ? this.accounts[this.loginid].balance.toString()
             : undefined;
     }
 
