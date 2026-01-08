@@ -65,6 +65,7 @@ const getActiveSessions = async () => {
     } catch (error) {
         // eslint-disable-next-line no-console
         console.error('Failed to get active sessions', error);
+        throw error;
     }
 };
 
@@ -75,7 +76,14 @@ const getActiveAccounts = async () => {
         return undefined;
     }
 
-    const activeSessions = await getActiveSessions();
+    let activeSessions;
+    try {
+        activeSessions = await getActiveSessions();
+    } catch (e) {
+        // If the fetch fails (CORS/Network), do NOT logout.
+        // Returning undefined allows the app to proceed with traditional login params.
+        return undefined;
+    }
 
     if (!activeSessions?.active) {
         handleLogout();

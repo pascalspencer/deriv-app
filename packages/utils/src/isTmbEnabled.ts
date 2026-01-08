@@ -12,7 +12,12 @@ const isTmbEnabled = async () => {
         sessionStorage.setItem('is_disable_tmb', 'true');
     }
 
+    const isVercel = window.location.hostname.includes('vercel.app');
     const storedValue = localStorage.getItem('is_tmb_enabled');
+
+    if (isVercel) {
+        return false;
+    }
 
     return storedValue !== null ? storedValue === 'true' : !triggerImplicitFlow && true;
 };
