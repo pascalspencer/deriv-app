@@ -2220,26 +2220,29 @@ export default class ClientStore extends BaseStore {
         }
         // update growthbook
         const analytics_config = await this.getAnalyticsConfig(true);
-        Analytics.setAttributes(analytics_config);
 
-        this.root_store.gtm.pushDataLayer({
-            event: 'log_out',
+        runInAction(() => {
+            Analytics.setAttributes(analytics_config);
+
+            this.root_store.gtm.pushDataLayer({
+                event: 'log_out',
+            });
+            this.loginid = null;
+            this.user_id = null;
+            this.upgrade_info = undefined;
+            this.accounts = {};
+            this.mt5_login_list = [];
+            this.dxtrade_accounts_list = [];
+            this.ctrader_accounts_list = [];
+            this.landing_companies = {};
+            LocalStore.set('marked_notifications', JSON.stringify([]));
+            localStorage.setItem('active_loginid', this.loginid);
+            sessionStorage.removeItem('active_loginid');
+            localStorage.setItem('active_user_id', this.user_id);
+            localStorage.setItem('client.accounts', JSON.stringify(this.accounts));
+
+            Analytics.reset();
         });
-        this.loginid = null;
-        this.user_id = null;
-        this.upgrade_info = undefined;
-        this.accounts = {};
-        this.mt5_login_list = [];
-        this.dxtrade_accounts_list = [];
-        this.ctrader_accounts_list = [];
-        this.landing_companies = {};
-        LocalStore.set('marked_notifications', JSON.stringify([]));
-        localStorage.setItem('active_loginid', this.loginid);
-        sessionStorage.removeItem('active_loginid');
-        localStorage.setItem('active_user_id', this.user_id);
-        localStorage.setItem('client.accounts', JSON.stringify(this.accounts));
-
-        Analytics.reset();
 
         runInAction(async () => {
             this.responsePayoutCurrencies(await WS.payoutCurrencies());

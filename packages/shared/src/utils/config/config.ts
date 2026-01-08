@@ -24,6 +24,7 @@ export const domain_app_ids = {
     'staging-app.deriv.be': 31186,
     'binary.com': 1,
     'test-app.deriv.com': 51072,
+    'vercel.app': 120237,
 };
 
 export const platform_app_ids = {
@@ -32,10 +33,14 @@ export const platform_app_ids = {
 
 export const getCurrentProductionDomain = () =>
     !/^staging\./.test(window.location.hostname) &&
-    Object.keys(domain_app_ids).find(domain => window.location.hostname === domain);
+    Object.keys(domain_app_ids).find(
+        domain => window.location.hostname === domain || window.location.hostname.endsWith(`.${domain}`)
+    );
 
 export const isProduction = () => {
-    const all_domains = Object.keys(domain_app_ids).map(domain => `(www\\.)?${domain.replace('.', '\\.')}`);
+    const all_domains = Object.keys(domain_app_ids).map(domain =>
+        domain === 'vercel.app' ? `.*\\.vercel\\.app` : `(www\\.)?${domain.replace('.', '\\.')}`
+    );
     return new RegExp(`^(${all_domains.join('|')})$`, 'i').test(window.location.hostname);
 };
 
