@@ -24,11 +24,7 @@ const DemoAccountCard = observer(() => {
             className='demo-account-card'
             icon='VIRTUAL'
             title={
-                <BalanceText
-                    currency={platform_demo_account?.currency || default_currency}
-                    balance={platform_demo_account?.balance || 0}
-                    size='xs'
-                />
+                <BalanceText currency={platform_demo_account?.currency || default_currency} balance={10000} size='xs' />
             }
             actions={
                 canResetBalance() && (

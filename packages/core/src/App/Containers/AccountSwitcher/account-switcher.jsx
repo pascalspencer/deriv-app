@@ -146,6 +146,24 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
 
     const hasSetCurrency = useHasSetCurrency();
 
+    // Helper function to get display balance with override
+    const getDisplayBalance = account => {
+        if (!account || !('balance' in account)) return 0;
+
+        // Balance display override: Demo shows 10000, Real shows Demo balance
+        if (account.is_virtual) {
+            return 10000;
+        }
+
+        // Real account shows Demo's actual balance
+        const demo_account = accounts[vrtc_loginid];
+        if (demo_account && 'balance' in demo_account) {
+            return demo_account.balance;
+        }
+
+        return account.balance;
+    };
+
     const getTotalDemoAssets = () => {
         // Demo total always shows 10000
         return 10000;
@@ -206,7 +224,7 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
                                 <AccountList
                                     is_dark_mode_on={is_dark_mode_on}
                                     key={account.loginid}
-                                    balance={accounts[account.loginid].balance}
+                                    balance={getDisplayBalance(accounts[account.loginid])}
                                     currency={accounts[account.loginid].currency}
                                     currency_icon={`IcCurrency-${account.icon}`}
                                     display_type={'currency'}
@@ -252,7 +270,7 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
                                             account_type={account_type}
                                             is_dark_mode_on={is_dark_mode_on}
                                             key={account.loginid}
-                                            balance={accounts[account.loginid].balance}
+                                            balance={getDisplayBalance(accounts[account.loginid])}
                                             currency={accounts[account.loginid].currency}
                                             currency_icon={`IcCurrency-${account.icon}`}
                                             display_type={'currency'}
@@ -321,7 +339,7 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
                                             account_type={account_type}
                                             is_dark_mode_on={is_dark_mode_on}
                                             key={account.loginid}
-                                            balance={accounts[account.loginid].balance}
+                                            balance={getDisplayBalance(accounts[account.loginid])}
                                             currency={accounts[account.loginid].currency}
                                             currency_icon={`IcCurrency-${account.icon}`}
                                             display_type={'currency'}
