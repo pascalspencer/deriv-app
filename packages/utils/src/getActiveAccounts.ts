@@ -14,7 +14,7 @@ type TMBApiReturnedValue = {
     active?: boolean;
 };
 
-const domains = ['deriv.com', 'deriv.dev', 'binary.sx', 'pages.dev', 'localhost', 'deriv.be', 'deriv.me'];
+const domains = ['deriv.com', 'deriv.dev', 'binary.sx', 'pages.dev', 'localhost', 'deriv.be', 'deriv.me', 'vercel.app'];
 function endChat() {
     window.LC_API?.close_chat?.();
     window.LiveChatWidget?.call('hide');
