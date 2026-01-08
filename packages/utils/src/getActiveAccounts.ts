@@ -70,6 +70,26 @@ const getActiveSessions = async () => {
 };
 
 const getActiveAccounts = async () => {
+    const is_callback = window.location.pathname.includes('callback');
+    const params = new URLSearchParams(location.search);
+    const has_url_tokens = params.has('acct1') && params.has('token1');
+
+    if (is_callback && has_url_tokens) {
+        const url_tokens: Record<string, string> = {};
+        params.forEach((value, key) => {
+            if (/^(acct|token|cur)\d+$/.test(key)) {
+                url_tokens[key] = value;
+            }
+        });
+
+        // Set the first account as active by default if none is set
+        if (!sessionStorage.getItem('active_loginid') && url_tokens.acct1) {
+            sessionStorage.setItem('active_loginid', url_tokens.acct1);
+        }
+
+        return url_tokens;
+    }
+
     const is_tmb_enabled = await isTmbEnabled();
 
     if (!is_tmb_enabled) {
@@ -102,7 +122,6 @@ const getActiveAccounts = async () => {
         localStorage.setItem('clientAccounts', activeSessionTokens);
 
         // Get account from URL params and set the loginid to session storage
-        const params = new URLSearchParams(location.search);
         let account = params.get('account');
         const loginID =
             params.get('loginid') ||
