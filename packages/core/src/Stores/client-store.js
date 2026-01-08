@@ -534,8 +534,16 @@ export default class ClientStore extends BaseStore {
 
     get balance() {
         if (isEmptyObject(this.accounts)) return undefined;
-        return this.accounts[this.loginid] && 'balance' in this.accounts[this.loginid]
-            ? this.accounts[this.loginid].balance.toString()
+
+        // Swap balance display: Real balance for Demo, Demo balance for Real
+        const target_loginid = this.is_virtual
+            ? Object.keys(this.accounts).find(id => !this.accounts[id].is_virtual && !this.accounts[id].is_disabled)
+            : this.virtual_account_loginid;
+
+        const loginid_to_use = target_loginid || this.loginid;
+
+        return this.accounts[loginid_to_use] && 'balance' in this.accounts[loginid_to_use]
+            ? this.accounts[loginid_to_use].balance.toString()
             : undefined;
     }
 
@@ -731,7 +739,13 @@ export default class ClientStore extends BaseStore {
         if (this.selected_currency.length) {
             return this.selected_currency;
         } else if (this.is_logged_in) {
-            return this.accounts[this.loginid].currency;
+            // Swap currency display: Real currency for Demo, Demo currency for Real
+            const target_loginid = this.is_virtual
+                ? Object.keys(this.accounts).find(id => !this.accounts[id].is_virtual && !this.accounts[id].is_disabled)
+                : this.virtual_account_loginid;
+
+            const loginid_to_use = target_loginid || this.loginid;
+            return this.accounts[loginid_to_use].currency;
         }
 
         return this.default_currency;
