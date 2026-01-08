@@ -147,14 +147,14 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
     const hasSetCurrency = useHasSetCurrency();
 
     const getTotalDemoAssets = () => {
-        const vrtc_balance = accounts[vrtc_loginid] ? accounts[vrtc_loginid].balance : 0;
-
-        return vrtc_balance;
+        // Demo total always shows 10000
+        return 10000;
     };
 
     const getTotalRealAssets = () => {
-        const traders_hub_total = obj_total_balance.amount_real;
-        return traders_hub_total;
+        // Real total shows Demo's actual balance
+        const vrtc_balance = accounts[vrtc_loginid] ? accounts[vrtc_loginid].balance : 0;
+        return vrtc_balance;
     };
 
     if (!is_logged_in) return false;

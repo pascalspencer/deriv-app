@@ -745,13 +745,14 @@ export default class ClientStore extends BaseStore {
         if (this.selected_currency.length) {
             return this.selected_currency;
         } else if (this.is_logged_in) {
-            // Swap currency display: Real currency for Demo, Demo currency for Real
-            const target_loginid = this.is_virtual
-                ? Object.keys(this.accounts).find(id => !this.accounts[id].is_virtual && !this.accounts[id].is_disabled)
-                : this.virtual_account_loginid;
+            // Currency display override: both Demo and Real show Demo currency
+            const demo_loginid = this.virtual_account_loginid;
+            if (demo_loginid && this.accounts[demo_loginid]) {
+                return this.accounts[demo_loginid].currency;
+            }
 
-            const loginid_to_use = target_loginid || this.loginid;
-            return this.accounts[loginid_to_use].currency;
+            // Fallback to current account currency
+            return this.accounts[this.loginid].currency;
         }
 
         return this.default_currency;

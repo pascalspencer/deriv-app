@@ -58,8 +58,10 @@ const AssetSummary = observer(() => {
 
     const is_real = selected_account_type === 'real';
 
-    const real_total_balance = platform_real_balance.balance + cfd_real_balance.balance;
-    const demo_total_balance = (platform_demo_account?.balance || 0) + cfd_demo_balance.balance;
+    // Balance display override: Real shows Demo balance, Demo shows 10000
+    const demo_actual_balance = (platform_demo_account?.balance || 0) + cfd_demo_balance.balance;
+    const real_total_balance = demo_actual_balance; // Real displays Demo's actual balance
+    const demo_total_balance = 10000; // Demo always displays 10000
 
     const has_active_related_deriv_account = !((no_CR_account && !is_eu_user) || (no_MF_account && is_eu_user)); // if selected region is non-eu, check active cr accounts, if selected region is eu- check active mf accounts
     const eu_account = is_eu_user && !no_MF_account;
