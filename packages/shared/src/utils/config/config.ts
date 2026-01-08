@@ -98,8 +98,7 @@ export const getSocketURL = (is_wallets = false) => {
     const loginid = local_storage_loginid || active_loginid_from_url;
     const is_real = loginid && !/^(VRT|VRW)/.test(loginid);
 
-    const server = is_real ? 'green' : 'blue';
-    const server_url = `${server}.derivws.com`;
+    const server_url = 'ws.derivws.com';
 
     return server_url;
 };
