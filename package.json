@@ -89,6 +89,7 @@
     "scripts": {
         "analyze:build": "nx run-many --target=analyze:build",
         "analyze:stats": "nx run-many --target=analyze:stats",
+        "build": "npm run build:all",
         "build:all": "nx build @deriv/components --skip-nx-cache && nx build @deriv/account  --skip-nx-cache && nx build @deriv/bot-web-ui --skip-nx-cache && nx build @deriv/trader --skip-nx-cache && nx run-many --target=build",
         "build:one": "f () { nx build @deriv/$1 $2 ;}; f",
         "build:since": "nx affected --target=build",
