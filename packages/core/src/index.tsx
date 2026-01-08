@@ -26,11 +26,9 @@ const has_endpoint_url = checkAndSetEndpointFromUrl();
 // if has endpoint url, APP will be redirected
 if (!has_endpoint_url) {
     const initApp = async () => {
-        const is_tmb_enabled = await isTmbEnabled();
+        await isTmbEnabled();
         const accounts = await getActiveAccounts();
-        const root_store = is_tmb_enabled
-            ? initStore(AppNotificationMessages, accounts)
-            : initStore(AppNotificationMessages);
+        const root_store = accounts ? initStore(AppNotificationMessages, accounts) : initStore(AppNotificationMessages);
 
         const wrapper = document.getElementById('deriv_app');
         if (wrapper) {

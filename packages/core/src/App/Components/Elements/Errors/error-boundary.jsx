@@ -9,6 +9,8 @@ class ErrorBoundary extends React.Component {
     }
     componentDidCatch = (error, info) => {
         if (window.TrackJS) window.TrackJS.console.log(this.props.root_store);
+        // eslint-disable-next-line no-console
+        console.error('ErrorBoundary caught error:', error, info);
 
         this.setState({
             hasError: true,
