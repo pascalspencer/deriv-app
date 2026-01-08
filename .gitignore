@@ -31,3 +31,9 @@ packages/*/stats.json
 packages/*/report.json
 packages/*/analyzed.html
 packages/*/treemap.html
+
+# Build logs
+wallets_build.log
+wallets_tail.txt
+wallets_tail.txt.txt
+debug-manifest.js

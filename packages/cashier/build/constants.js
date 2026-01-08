@@ -1,4 +1,5 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const IgnorePlugin = require('webpack').IgnorePlugin;
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -99,6 +100,14 @@ const MINIMIZERS = !IS_RELEASE
 
 const plugins = () => [
     new CleanWebpackPlugin(),
+    new CopyPlugin({
+        patterns: [
+            {
+                from: path.resolve(__dirname, '../src/public/images'),
+                to: 'cashier/public/images',
+            },
+        ],
+    }),
     new IgnorePlugin({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ }),
     new MiniCssExtractPlugin(cssConfig()),
     new DefinePlugin({
