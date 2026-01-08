@@ -33,6 +33,7 @@ packages/*/analyzed.html
 packages/*/treemap.html
 
 # Build logs
+*.log
 wallets_build.log
 wallets_tail.txt
 wallets_tail.txt.txt
