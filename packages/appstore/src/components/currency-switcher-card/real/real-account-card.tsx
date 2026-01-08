@@ -16,12 +16,15 @@ const RealAccountCard = observer(() => {
 
     const { client, common, modules, traders_hub } = useStore();
 
-    const { accounts, loginid } = client;
+    const { accounts, loginid, virtual_account_loginid } = client;
     const { current_language } = common;
     const { current_list } = modules.cfd;
     const { openModal, is_eu_user, selected_account_type } = traders_hub;
 
-    const { balance, currency } = loginid ? accounts[loginid] : default_balance;
+    // Balance display override: Real card shows Demo account's actual balance/currency
+    const demo_account = virtual_account_loginid ? accounts[virtual_account_loginid] : undefined;
+    const balance = demo_account ? demo_account.balance : 0;
+    const currency = demo_account ? demo_account.currency : default_balance.currency;
 
     const has_mf_mt5_account = Object.keys(current_list)
         .map(key => current_list[key])
