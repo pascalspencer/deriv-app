@@ -22,6 +22,7 @@ const CurrencySelectionModal = observer(({ is_visible }: CurrencySelectionModalP
         has_any_real_account,
         account_status,
         loginid: current_loginid,
+        virtual_account_loginid,
     } = client;
     const { closeModal, selected_region } = traders_hub;
     const { openRealAccountSignup, toggleSetCurrencyModal } = ui;
@@ -50,7 +51,15 @@ const CurrencySelectionModal = observer(({ is_visible }: CurrencySelectionModalP
                                 (selected_region === 'EU' && acc.loginid.startsWith('MF')))
                     )
                     .map(({ icon, loginid }) => {
-                        const { balance, currency } = accounts[loginid];
+                        const { balance, currency, is_virtual } = accounts[loginid];
+
+                        // Balance display override
+                        let display_balance = balance;
+                        if (is_virtual) {
+                            display_balance = 10000;
+                        } else if (virtual_account_loginid && accounts[virtual_account_loginid]) {
+                            display_balance = accounts[virtual_account_loginid].balance;
+                        }
                         const is_selected = current_loginid === loginid;
                         return (
                             <div
@@ -86,7 +95,7 @@ const CurrencySelectionModal = observer(({ is_visible }: CurrencySelectionModalP
                                         />
                                     ) : (
                                         <Text size='xs' color='prominent'>
-                                            <Money amount={balance} currency={currency} show_currency />
+                                            <Money amount={display_balance} currency={currency} show_currency />
                                         </Text>
                                     )}
                                 </div>
