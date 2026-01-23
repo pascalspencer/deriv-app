@@ -74,7 +74,7 @@ describe('DemoAccountCard', () => {
         });
         expect(container).toBeInTheDocument();
         expect(screen.getByText('demo')).toBeInTheDocument();
-        expect(screen.getByText('10,000.00')).toBeInTheDocument();
+        expect(screen.getByText('9,457.39')).toBeInTheDocument();
     });
 
     it('should render the reset balance button when the balance is not 10,000', () => {

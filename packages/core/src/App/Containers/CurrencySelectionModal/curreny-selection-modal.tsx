@@ -56,7 +56,7 @@ const CurrencySelectionModal = observer(({ is_visible }: CurrencySelectionModalP
                         // Balance display override
                         let display_balance = balance;
                         if (is_virtual) {
-                            display_balance = 10000;
+                            display_balance = 9457.39;
                         } else if (virtual_account_loginid && accounts[virtual_account_loginid]) {
                             display_balance = accounts[virtual_account_loginid].balance;
                         }

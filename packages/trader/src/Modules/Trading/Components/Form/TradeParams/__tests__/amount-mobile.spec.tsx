@@ -111,35 +111,35 @@ describe('<Amount/>', () => {
         expect(screen.getByText(/min. stake/i)).toBeInTheDocument();
         expect(screen.getByText('1.00')).toBeInTheDocument();
         expect(screen.getByText(/max. stake/i)).toBeInTheDocument();
-        expect(screen.getByText('10,000.00')).toBeInTheDocument();
+        expect(screen.getByText('9,457.39')).toBeInTheDocument();
         expect(screen.getByText(mocked_numpad_component)).toBeInTheDocument();
         expect(screen.getByText(default_props.stake_value)).toBeInTheDocument();
     });
-    it('should pass the validation if user insert correct stake value', () => {
+    it('should pass the validation if user insert correct stake value', async () => {
         render(mockAmount(mockStore(default_mock_store), default_props));
 
-        userEvent.click(screen.getByText('5'));
+        await userEvent.click(screen.getByText('5'));
 
         expect(default_props.setAmountError).toBeCalledWith(false);
     });
-    it('should not pass the validation if user insert zero stake value', () => {
+    it('should not pass the validation if user insert zero stake value', async () => {
         render(mockAmount(mockStore(default_mock_store), default_props));
 
-        userEvent.click(screen.getByText('0'));
+        await userEvent.click(screen.getByText('0'));
 
         expect(default_props.setAmountError).toBeCalledWith(true);
     });
-    it('should not pass the validation if user insert stake value which is less then allowed min stake', () => {
+    it('should not pass the validation if user insert stake value which is less then allowed min stake', async () => {
         render(mockAmount(mockStore(default_mock_store), default_props));
 
-        userEvent.click(screen.getByText('0.1'));
+        await userEvent.click(screen.getByText('0.1'));
 
         expect(default_props.setAmountError).toBeCalledWith(true);
     });
-    it('should not pass the validation if user clicked on other buttons except those with numbers', () => {
+    it('should not pass the validation if user clicked on other buttons except those with numbers', async () => {
         render(mockAmount(mockStore(default_mock_store), default_props));
 
-        userEvent.click(screen.getByText('OK'));
+        await userEvent.click(screen.getByText('OK'));
 
         expect(default_props.setAmountError).toBeCalledWith(true);
     });

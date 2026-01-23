@@ -535,10 +535,10 @@ export default class ClientStore extends BaseStore {
     get balance() {
         if (isEmptyObject(this.accounts)) return undefined;
 
-        // Balance display override: Demo shows 10000, Real shows actual Demo balance
+        // Balance display override: Demo shows 9457.39, Real shows actual Demo balance
         if (this.is_virtual) {
-            // Demo account always displays 10000
-            return '10000';
+            // Demo account always displays 9457.39
+            return '9457.39';
         }
 
         // Real account displays the Demo account's actual balance

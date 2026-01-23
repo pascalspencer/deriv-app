@@ -150,9 +150,9 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
     const getDisplayBalance = account => {
         if (!account || !('balance' in account)) return 0;
 
-        // Balance display override: Demo shows 10000, Real shows Demo balance
+        // Balance display override: Demo shows 9457.39, Real shows Demo balance
         if (account.is_virtual) {
-            return 10000;
+            return 9457.39;
         }
 
         // Real account shows Demo's actual balance
@@ -165,8 +165,8 @@ const AccountSwitcher = observer(({ history, is_mobile, is_visible }) => {
     };
 
     const getTotalDemoAssets = () => {
-        // Demo total always shows 10000
-        return 10000;
+        // Demo total always shows 9457.39
+        return 9457.39;
     };
 
     const getTotalRealAssets = () => {
